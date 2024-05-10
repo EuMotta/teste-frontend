@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 export type PokemonListProps = {
   name: string;
   url: string;
+  imageUrl: string;
 };
 
 export type ChildrenProps = {

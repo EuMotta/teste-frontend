@@ -9,9 +9,17 @@ interface Button {
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   target?: string;
+  unstyled?: boolean;
   onClick?: () => void;
 }
-const Button = ({ children, href, className, disabled, ...props }: Button) => {
+const Button = ({
+  children,
+  href,
+  className,
+  unstyled,
+  disabled,
+  ...props
+}: Button) => {
   let buttonClassName = styles.button;
   const buttonDisabled = styles.disabled;
   if (className) {
@@ -19,6 +27,9 @@ const Button = ({ children, href, className, disabled, ...props }: Button) => {
   }
   if (disabled) {
     buttonClassName = ` ${buttonDisabled} ${className} `;
+  }
+  if (unstyled) {
+    buttonClassName = '';
   }
 
   const buttonProps = {
