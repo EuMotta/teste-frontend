@@ -13,7 +13,7 @@ interface Button {
 }
 const Button = ({ children, href, className, disabled, ...props }: Button) => {
   let buttonClassName = styles.button;
-  let buttonDisabled = styles.disabled;
+  const buttonDisabled = styles.disabled;
   if (className) {
     buttonClassName = ` ${buttonClassName} ${className} `;
   }
