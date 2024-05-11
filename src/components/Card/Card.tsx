@@ -7,7 +7,10 @@ import Button from '../Button';
 type Props = {
   pokemon: PokemonListProps;
 };
-const typeColors = {
+type TypeColors = {
+  [key: string]: string;
+};
+export const typeColors: TypeColors = {
   electric: '#FFD700',
   fire: '#FF4500',
   water: '#1E90FF',

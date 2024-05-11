@@ -25,7 +25,7 @@ const App = () => {
           <PokemonList />
           <Paginator
             totalCount={data.results.length}
-            pageSize={10}
+            pageSize={12}
             currentPage={page}
             setPage={setPage}
           />
