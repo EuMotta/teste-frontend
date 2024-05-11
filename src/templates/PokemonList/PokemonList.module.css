@@ -1,0 +1,9 @@
+.list_container {
+  @apply flex flex-col gap-5;
+}
+.list_container .list_button {
+  @apply flex justify-center items-center;
+}
+.list_container .list_list {
+  @apply grid grid-cols-5 gap-10;
+}

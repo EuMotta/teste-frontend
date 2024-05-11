@@ -1,0 +1,7 @@
+.loadingSkeleton_content {
+  @apply flex justify-center flex-col items-center h-screen;
+}
+
+.loadingPikachu_content {
+  @apply flex justify-center flex-col items-center h-screen;
+}

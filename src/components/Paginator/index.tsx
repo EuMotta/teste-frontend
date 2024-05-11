@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Button from '../Button';
-
+import styles from './Paginator.module.css';
 type Props = {
   totalCount: number;
   pageSize: number;
@@ -10,8 +10,7 @@ type Props = {
 };
 
 const Paginator = (props: Props) => {
-  const { totalCount, pageSize, currentPage, setPage } = props;
-  const totalPages = Math.ceil(totalCount / pageSize);
+  const { currentPage, setPage } = props;
 
   const goToPreviousPage = () => {
     setPage(currentPage - 1);
@@ -22,14 +21,12 @@ const Paginator = (props: Props) => {
   };
 
   return (
-    <div className="flex gap-5 justify-center items-center">
+    <div className={styles.paginator_content}>
       <Button onClick={goToPreviousPage} disabled={currentPage <= 1}>
         Anterior
       </Button>
       <span>{currentPage}</span>
-      <Button onClick={goToNextPage} disabled={currentPage >= totalPages}>
-        Próximo
-      </Button>
+      <Button onClick={goToNextPage}>Próximo</Button>
     </div>
   );
 };

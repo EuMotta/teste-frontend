@@ -1,11 +1,20 @@
 import Image from 'next/image';
 import React from 'react';
-const LoadingSkeleton = () => {
+
+import styles from './LoadingSkeleton.module.css';
+export const LoadingSkeleton = () => {
   return (
-    <div className="flex justify-center flex-col items-center h-screen">
+    <div className={styles.loadingSkeleton_content}>
       <Image src="/pokemon.svg" alt="logo" width={400} height={400} />
     </div>
   );
 };
 
-export default LoadingSkeleton;
+export const LoadingPikachu = () => {
+  return (
+    <div className={styles.loadingPikachu_content}>
+      <Image src="/pikachu.webp" alt="logo" width={300} height={300} />
+      <h2>Carregando pokemons</h2>
+    </div>
+  );
+};

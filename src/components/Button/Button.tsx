@@ -51,7 +51,11 @@ const Button = ({
     );
   }
 
-  return <button {...buttonProps}>{children}</button>;
+  return (
+    <button disabled={disabled} {...buttonProps}>
+      {children}
+    </button>
+  );
 };
 
 export default Button;
