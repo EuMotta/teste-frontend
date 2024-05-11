@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { PokemonListProps } from '../../../../@Types/global';
-
+type typeInfoProps = {
+  type: {
+    name: string;
+  };
+};
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const pokemon = searchParams.get('pokemon');
-  const page = searchParams.get('page');
+  let page = Number(searchParams.get('page'));
+  page = page * 10;
+
   try {
     if (pokemon) {
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
@@ -15,19 +20,33 @@ export async function GET(request: NextRequest) {
     }
     if (page) {
       const res = await fetch(
-        `https://pokeapi.co/api/v2/pokemon/?offset=${page}&limit=20`,
+        `https://pokeapi.co/api/v2/pokemon/?offset=${page}&limit=10`,
       );
       const data = await res.json();
 
-      data.results = data.results.map((pokemon: PokemonListProps) => {
-        const id = pokemon.url.split('/')[6];
-        const paddedId = id.padStart(3, '0');
-        const image = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`;
+      const promises = data.results.map(
+        async (pokemon: { url: string; name: string }) => {
+          const id = pokemon.url.split('/')[6];
+          const paddedId = id.padStart(3, '0');
+          const image = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${paddedId}.png`;
 
-        pokemon.imageUrl = image;
+          const res = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`,
+          );
+          const pokemonData = await res.json();
+          const types = pokemonData.types.map(
+            (typeInfo: typeInfoProps) => typeInfo.type.name,
+          );
 
-        return pokemon;
-      });
+          return {
+            ...pokemon,
+            imageUrl: image,
+            types: types,
+          };
+        },
+      );
+
+      data.results = await Promise.all(promises);
 
       return NextResponse.json(data, { status: 200 });
     }

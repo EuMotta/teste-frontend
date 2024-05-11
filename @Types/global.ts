@@ -4,6 +4,7 @@ export type PokemonListProps = {
   name: string;
   url: string;
   imageUrl: string;
+  types: string[];
 };
 
 export type ChildrenProps = {

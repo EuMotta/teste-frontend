@@ -70,6 +70,9 @@ export function useData({ url, reverse, page, pokemon }: Hook) {
       if (page && data.length > 0) {
         data = data[0];
       }
+      if (pokemon && data.length <= 1) {
+        data = data[0];
+      }
 
       if (reverse && data.length > 1) {
         const reverseData = data.reverse();
