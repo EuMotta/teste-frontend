@@ -10,12 +10,12 @@ const Navbar = () => {
       href: '/',
     },
     {
-      name: 'Pokemons',
-      href: '/pokemons',
+      name: 'Pokebag',
+      href: '/pokebag',
     },
   ];
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="bg-white/80 shadow-sm">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Button
           href="/"

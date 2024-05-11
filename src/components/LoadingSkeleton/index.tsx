@@ -13,7 +13,15 @@ export const LoadingSkeleton = () => {
 export const LoadingPikachu = () => {
   return (
     <div className={styles.loadingPikachu_content}>
-      <Image src="/pikachu.webp" alt="logo" width={300} height={300} />
+      <Image
+        src="/pikachu.webp"
+        alt="logo"
+        width={300}
+        height={300}
+        style={{
+          filter: 'drop-shadow(5px 5px 5px black)',
+        }}
+      />
       <h2>Carregando pokemons</h2>
     </div>
   );

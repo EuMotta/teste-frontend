@@ -1,5 +1,5 @@
 .button {
-  @apply font-mono p-2 rounded shadow text-white bg-indigo-500 hover:bg-indigo-700;
+  @apply font-mono p-2 rounded shadow text-white bg-indigo-500 hover:bg-indigo-700 active:bg-indigo-600;
 }
 .disabled {
   @apply font-mono p-2 rounded shadow text-white bg-gray-500;

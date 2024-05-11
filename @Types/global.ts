@@ -5,6 +5,11 @@ export type PokemonListProps = {
   url: string;
   imageUrl: string;
   types: string[];
+  stats: stats[];
+};
+type stats = {
+  name: string;
+  base_stat: number;
 };
 
 export type ChildrenProps = {

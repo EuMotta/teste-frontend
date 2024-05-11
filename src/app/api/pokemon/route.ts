@@ -7,22 +7,9 @@ type typeInfoProps = {
 };
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const pokemon = searchParams.get('pokemon');
   let page = Number(searchParams.get('page'));
   page = page * 12;
   try {
-    if (pokemon) {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-      const data = await res.json();
-
-      const id = data.id.toString().padStart(3, '0');
-
-      const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${id}.png`;
-
-      data.imageUrl = imageUrl;
-
-      return NextResponse.json(data, { status: 200 });
-    }
     if (page) {
       const res = await fetch(
         `https://pokeapi.co/api/v2/pokemon/?offset=${page}&limit=12`,
@@ -42,10 +29,22 @@ export async function GET(request: NextRequest) {
             (typeInfo: typeInfoProps) => typeInfo.type.name,
           );
 
+          const stats = pokemonData.stats
+            .filter(
+              (statInfo: { stat: { name: string } }) =>
+                statInfo.stat.name === 'attack' ||
+                statInfo.stat.name === 'defense',
+            )
+            .map((statInfo: { base_stat: number; stat: { name: string } }) => ({
+              name: statInfo.stat.name,
+              base_stat: statInfo.base_stat,
+            }));
+
           return {
             ...pokemon,
             imageUrl: image,
             types: types,
+            stats: stats,
           };
         },
       );

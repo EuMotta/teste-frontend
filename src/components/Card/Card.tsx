@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import { toast } from 'react-toastify';
 
 import { PokemonListProps } from '../../../@Types/global';
 import Button from '../Button';
@@ -30,34 +31,65 @@ export const typeColors: TypeColors = {
   bug: '#008000',
 };
 const PokemonCard = ({ pokemon }: Props) => {
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/pokebag', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(pokemon),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      toast.success('Pokemon adicionado a pokebag!');
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro desconhecido');
+      }
+    }
+  };
   return (
     <div
       key={pokemon.name}
-      className="max-w-72 border-4 bg-white hover:shadow-xl transition-all mx-auto"
+      className="max-w-72 border-2 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
       style={{
         borderColor: typeColors[pokemon.types[0] as keyof typeof typeColors],
       }}
     >
-      <Button unstyled href={`/pokemon/${pokemon.name}`}>
-        <div className="rounded overflow-hidden shadow-lg">
-          <Image
-            className="w-full"
-            src={pokemon.imageUrl}
-            width={530}
-            height={530}
-            alt={pokemon.name}
-          />
+      <div className="rounded overflow-hidden shadow-lg">
+        <Button unstyled href={`/pokemon/${pokemon.name}`}>
+          <div className="bg-white shadow-md">
+            <Image
+              className="w-full group-hover:scale-105 transition-all"
+              src={pokemon.imageUrl}
+              width={530}
+              height={530}
+              alt={pokemon.name}
+              style={{
+                filter: 'drop-shadow(5px 5px 5px black)',
+              }}
+            />
+          </div>
+
           <div className="px-6 py-4">
             <h3 className="font-bold text-center mb-2">{pokemon.name}</h3>
             <p className="text-center">
-              {pokemon?.types?.map((type) => {
+              {pokemon?.types?.map((type, index) => {
                 return (
                   <span
                     key={type}
                     className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
                     style={{
                       backgroundColor:
-                        typeColors[pokemon.types[0] as keyof typeof typeColors],
+                        typeColors[
+                          pokemon.types[index] as keyof typeof typeColors
+                        ],
                     }}
                   >
                     {type}
@@ -65,9 +97,22 @@ const PokemonCard = ({ pokemon }: Props) => {
                 );
               })}
             </p>
+
+            {pokemon?.stats?.map((stat) => {
+              return (
+                <p key={stat.name}>
+                  {stat.name}: {stat.base_stat}
+                </p>
+              );
+            })}
           </div>
+        </Button>
+        <div className="flex justify-center items-center p-2">
+          <Button onClick={handleSubmit} className="w-full">
+            +
+          </Button>
         </div>
-      </Button>
+      </div>
     </div>
   );
 };

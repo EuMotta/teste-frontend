@@ -28,7 +28,7 @@ const Page = ({ params }: { params: Params }) => {
   console.log(params);
   const { loading, /* fetchData, */ data } = useData({
     reverse: true,
-    url: '/api/pokemon',
+    url: '/api/pokemon/',
     pokemon: params.name,
   });
   if (loading) {
@@ -106,7 +106,7 @@ const Page = ({ params }: { params: Params }) => {
               </div>
               <div className="mt-4">
                 <h2 className="text-lg font-semibold text-gray-800">Moves:</h2>
-                <div className="flex gap-5 flex-wrap">
+                <div className="flex gap-5 flex-wrap overflow-y-scroll max-h-96">
                   {data.moves.map((move: any, index: number) => (
                     <div
                       className="bg-indigo-600 text-white p-2 rounded-full"
