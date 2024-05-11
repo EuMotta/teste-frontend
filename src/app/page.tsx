@@ -1,37 +1,34 @@
-'use client';
-import { useState } from 'react';
-
-import { LoadingPikachu } from '@/components/LoadingSkeleton';
-import Paginator from '@/components/Paginator';
+import Button from '@/components/Button';
+import Container from '@/components/Container';
 import Section from '@/components/Section';
-import { useData } from '@/Hooks';
-import { DataProvider } from '@/providers/DataProvider';
-import PokemonList from '@/templates/PokemonList/PokemonList';
 
 const App = () => {
-  const [page, setPage] = useState<number>(1);
-  const { loading, fetchData, data } = useData({
-    reverse: true,
-    url: '/api/pokemon',
-    page: page,
-  });
-  if (loading) {
-    return <LoadingPikachu />;
-  }
   return (
-    <DataProvider data={data} loading={loading} fetchData={fetchData}>
+    <main>
       <Section>
-        <div className="flex flex-col gap-5">
-          <PokemonList />
-          <Paginator
-            totalCount={data.results.length}
-            pageSize={12}
-            currentPage={page}
-            setPage={setPage}
-          />
-        </div>
+        <Container className="justify-center items-center h-screen">
+          <div className="grid lg:grid-cols-3 gap-10">
+            <div className="flex flex-col justify-center items-center">
+              <Button unstyled href="/pokemons/1">
+                <div className="min-h-96 bg-blue-500 w-96 flex border shadow-sm hover:shadow-lg hover:shadow-slate-500 transition-all rounded-full justify-center items-center">
+                  <h1 className="text-white text-3xl font-bold">Pokemons</h1>
+                </div>
+              </Button>
+            </div>
+            <div className="flex justify-center items-center h-full">
+              <h1>Escolha um caminho</h1>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <Button unstyled href="/pokebag">
+                <div className="min-h-96 w-96 bg-red-500 flex border shadow-sm hover:shadow-lg hover:shadow-slate-500 transition-all rounded-full justify-center items-center">
+                  <h1 className="text-white text-3xl font-bold">Pokebag</h1>
+                </div>
+              </Button>
+            </div>
+          </div>
+        </Container>
       </Section>
-    </DataProvider>
+    </main>
   );
 };
 

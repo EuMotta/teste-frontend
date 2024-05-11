@@ -64,7 +64,13 @@ const PokemonCard = ({ pokemon }: Props) => {
     >
       <div className="rounded overflow-hidden shadow-lg">
         <Button unstyled href={`/pokemon/${pokemon.name}`}>
-          <div className="bg-white shadow-md">
+          <div
+            className=" shadow-md"
+            style={{
+              backgroundColor:
+                typeColors[pokemon.types[0] as keyof typeof typeColors],
+            }}
+          >
             <Image
               className="w-full group-hover:scale-105 transition-all"
               src={pokemon.imageUrl}

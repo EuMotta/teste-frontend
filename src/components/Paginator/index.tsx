@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import Button from '../Button';
@@ -6,27 +7,29 @@ type Props = {
   totalCount: number;
   pageSize: number;
   currentPage: number;
-  setPage: (page: number) => void;
 };
 
 const Paginator = (props: Props) => {
-  const { currentPage, setPage } = props;
-
-  const goToPreviousPage = () => {
-    setPage(currentPage - 1);
+  let { currentPage } = props;
+  const { totalCount } = props;
+  const router = useRouter();
+  const handleNext = () => {
+    currentPage++;
+    router.push(`/pokemons/${currentPage}`);
   };
-
-  const goToNextPage = () => {
-    setPage(currentPage + 1);
+  const handleBack = () => {
+    currentPage--;
+    router.push(`/pokemons/${currentPage}`);
   };
-
   return (
     <div className={styles.paginator_content}>
-      <Button onClick={goToPreviousPage} disabled={currentPage <= 1}>
+      <Button onClick={handleBack} disabled={currentPage < 1}>
         Anterior
       </Button>
       <span>{currentPage}</span>
-      <Button onClick={goToNextPage}>Próximo</Button>
+      <Button onClick={handleNext} disabled={totalCount < 1}>
+        Próximo
+      </Button>
     </div>
   );
 };
