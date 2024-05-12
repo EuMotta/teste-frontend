@@ -17,12 +17,20 @@ const App = ({ params }: { params: Params }) => {
     page: params.pages,
   });
   if (params.pages < 1) {
-    return <NoPokemons />;
+    return (
+      <NoPokemons
+        src="/crypikachu.png"
+        text="Não existem pokémons aqui, tente ourta página"
+      />
+    );
   }
   if (data?.results?.length < 1) {
     return (
       <div>
-        <NoPokemons />
+        <NoPokemons
+          src="/crypikachu.png"
+          text="Não existem pokémons aqui, tente ourta página"
+        />
         <Paginator
           totalCount={data.results.length}
           pageSize={12}
@@ -36,7 +44,7 @@ const App = ({ params }: { params: Params }) => {
   }
   return (
     <DataProvider data={data} loading={loading} fetchData={fetchData}>
-      <Hero />
+      <Hero src="/pokemon.svg" />
       <Section>
         <div className="flex flex-col gap-5">
           <PokemonList />

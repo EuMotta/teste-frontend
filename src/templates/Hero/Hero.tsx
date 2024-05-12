@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
 
-const Hero = () => {
+type HeroProps = {
+  src: string;
+};
+const Hero = ({ src }: HeroProps) => {
   return (
     <div className="bg-red-400 p-5 flex justify-center items-center">
       <Image
         className=""
-        src="/Pokedex_logo.png"
+        src={src}
         width={230}
         height={230}
         alt="pokedex"

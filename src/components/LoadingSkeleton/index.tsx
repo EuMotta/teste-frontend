@@ -26,3 +26,19 @@ export const LoadingPikachu = () => {
     </div>
   );
 };
+export const LoadingPokeBag = () => {
+  return (
+    <div className={styles.loadingPikachu_content}>
+      <Image
+        src="/pokebag.png"
+        alt="logo"
+        width={300}
+        height={300}
+        style={{
+          filter: 'drop-shadow(5px 5px 5px black)',
+        }}
+      />
+      <h2>Carregando Pokébag</h2>
+    </div>
+  );
+};

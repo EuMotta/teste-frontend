@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 
+import Button from '@/components/Button';
 import { typeColors } from '@/components/Card/Card';
 import Container from '@/components/Container';
 import StatProgressBar from '@/components/ProgressBar';
@@ -34,10 +35,10 @@ const Page = ({ params }: { params: Params }) => {
   if (loading) {
     return <div>Carregando...</div>;
   }
-  console.log(data);
   return (
     <Section>
       <Container>
+        <Button href="/pokemons/1">Voltar</Button>
         <div className="grid grid-cols-2 ">
           <div className="flex justify-center items-center">
             <Image

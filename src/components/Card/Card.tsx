@@ -7,6 +7,8 @@ import Button from '../Button';
 
 type Props = {
   pokemon: PokemonListProps;
+  type?: 'add' | 'del';
+  fetchData?: () => void;
 };
 type TypeColors = {
   [key: string]: string;
@@ -30,7 +32,7 @@ export const typeColors: TypeColors = {
   poison: '#D196FC',
   bug: '#008000',
 };
-const PokemonCard = ({ pokemon }: Props) => {
+const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
   const handleSubmit = async () => {
     try {
       const response = await fetch('/api/pokebag', {
@@ -38,14 +40,18 @@ const PokemonCard = ({ pokemon }: Props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(pokemon),
+        body: JSON.stringify({ pokemon: pokemon, type: type }),
       });
 
       if (!response.ok) {
         throw new Error(await response.text());
       }
-
-      toast.success('Pokemon adicionado a pokebag!');
+      const responseData = await response.text();
+      console.log(responseData);
+      if (fetchData) {
+        fetchData();
+      }
+      toast.success(responseData);
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -57,7 +63,7 @@ const PokemonCard = ({ pokemon }: Props) => {
   return (
     <div
       key={pokemon.name}
-      className="max-w-72 border-2 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
+      className="w-56 border-2 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
       style={{
         borderColor: typeColors[pokemon.types[0] as keyof typeof typeColors],
       }}
@@ -114,9 +120,16 @@ const PokemonCard = ({ pokemon }: Props) => {
           </div>
         </Button>
         <div className="flex justify-center items-center p-2">
-          <Button onClick={handleSubmit} className="w-full">
-            +
-          </Button>
+          {type === 'add' && (
+            <Button onClick={handleSubmit} className="w-full">
+              +
+            </Button>
+          )}
+          {type === 'del' && (
+            <Button onClick={handleSubmit} className="w-full">
+              -
+            </Button>
+          )}
         </div>
       </div>
     </div>

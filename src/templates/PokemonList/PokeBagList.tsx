@@ -10,13 +10,10 @@ import { useData } from '@/providers/DataProvider';
 import { PokemonListProps } from '../../../@Types/global';
 import styles from './PokemonList.module.css';
 
-const PokemonList = () => {
-  const { loading, fetchData, data } = useData();
+const PokeBagList = () => {
+  const { fetchData, data } = useData();
   const [search, setSearch] = useState('');
   const router = useRouter();
-  if (loading) {
-    return <div>Carregando pokemons...</div>;
-  }
 
   const handleSearch = async () => {
     if (search.trim() !== '') {
@@ -55,12 +52,17 @@ const PokemonList = () => {
         </div>
       </div>
       <div className={styles.list_list}>
-        {data.results.map((pokemon: PokemonListProps) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} type="add" />
+        {data.map((pokemon: PokemonListProps) => (
+          <PokemonCard
+            key={pokemon.name}
+            pokemon={pokemon}
+            type="del"
+            fetchData={fetchData}
+          />
         ))}
       </div>
     </Container>
   );
 };
 
-export default PokemonList;
+export default PokeBagList;
