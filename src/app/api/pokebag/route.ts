@@ -32,7 +32,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: any) {
   const data = await request.json();
   const { pokemon, type } = data;
-  console.log(type);
   try {
     let pokemons = [];
 

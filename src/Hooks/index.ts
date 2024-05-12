@@ -48,7 +48,6 @@ export function useData({ url, reverse, page, pokemon }: Hook) {
 
   const fetchData = useCallback(async () => {
     dispatch({ type: 'FETCH_REQUEST' });
-    console.log(pokemon);
     try {
       let result;
       if (page) {

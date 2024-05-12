@@ -22,8 +22,8 @@ export const typeColors: TypeColors = {
   rock: '#A9A9A9',
   ground: '#D2B48C',
   ice: '#87CEEB',
-  ghost: '#483D8B',
-  dark: '#2F4F4F',
+  ghost: '#356177',
+  dark: '#4e567d',
   dragon: '#9932CC',
   fairy: '#FFB6C1',
   steel: '#708090',
@@ -47,7 +47,6 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
         throw new Error(await response.text());
       }
       const responseData = await response.text();
-      console.log(responseData);
       if (fetchData) {
         fetchData();
       }
@@ -63,22 +62,29 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
   return (
     <div
       key={pokemon.name}
-      className="w-56 border-2 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
+      className="w-56 border-2 hover:scale-105 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
       style={{
         borderColor: typeColors[pokemon.types[0] as keyof typeof typeColors],
       }}
     >
-      <div className="rounded overflow-hidden shadow-lg">
+      <div className="rounded shadow-lg h-full flex flex-col justify-between">
         <Button unstyled href={`/pokemon/${pokemon.name}`}>
           <div
             className=" shadow-md"
             style={{
               backgroundColor:
                 typeColors[pokemon.types[0] as keyof typeof typeColors],
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              backgroundImage: `url('/type/${
+                pokemon.types[0] === 'normal' && pokemon.types[1]
+                  ? pokemon.types[1]
+                  : pokemon.types[0]
+              }.jpg')`,
             }}
           >
             <Image
-              className="w-full group-hover:scale-105 transition-all"
+              className="w-full group-hover:scale-125 group-hover:translate-x-5 group-hover:-translate-y-5 transition-all"
               src={pokemon.imageUrl}
               width={530}
               height={530}
@@ -89,14 +95,14 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
             />
           </div>
 
-          <div className="px-6 py-4">
+          <div className="px-6 py-4 ">
             <h3 className="font-bold text-center mb-2">{pokemon.name}</h3>
             <p className="text-center">
               {pokemon?.types?.map((type, index) => {
                 return (
                   <span
                     key={type}
-                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    className="inline-block bg-gray-200 text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
                     style={{
                       backgroundColor:
                         typeColors[

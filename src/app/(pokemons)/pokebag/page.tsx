@@ -18,7 +18,6 @@ const Page = () => {
   if (loading) {
     return <LoadingPokeBag />;
   }
-  console.log(data);
   if (data?.length < 1 || !data) {
     return (
       <div>
@@ -30,7 +29,6 @@ const Page = () => {
     );
   }
   const totalStats = sumBaseStats(data);
-  console.log(totalStats);
   return (
     <DataProvider data={data} loading={loading} fetchData={fetchData}>
       <Hero src="/pokebag.png" />
