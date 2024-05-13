@@ -9,6 +9,10 @@ interface State {
   data: any;
   filter: string;
 }
+type Params = {
+  name: string[];
+};
+
 export type Hook = {
   url: string;
   reverse: boolean;
@@ -90,6 +94,72 @@ export function useData({ url, reverse, page, pokemon }: Hook) {
       }
     }
   }, [url, reverse, page, pokemon]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return {
+    ...state,
+    fetchData,
+  };
+}
+
+export function useCompareData({
+  reverse,
+  params,
+}: {
+  reverse: boolean;
+  params: Params;
+}) {
+  const [state, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+    data: [],
+    filter: '',
+  });
+
+  const fetchData = useCallback(async () => {
+    dispatch({ type: 'FETCH_REQUEST' });
+    try {
+      if (params && Array.isArray(params.name)) {
+        const pokemonData = await Promise.all(
+          params.name.map(async (pokemon) => {
+            console.log(pokemon);
+            const response = await fetch(
+              `https://pokeapi.co/api/v2/pokemon/${pokemon}`,
+            );
+            const data = await response.json();
+            return data;
+          }),
+        );
+
+        const flattenedData = pokemonData.flat();
+
+        if (flattenedData.length === 0) {
+          dispatch({ type: 'FETCH_SUCCESS', payload: [] });
+          return;
+        }
+
+        let processedData = flattenedData;
+
+        if (reverse) {
+          processedData = processedData.reverse();
+        }
+
+        dispatch({ type: 'FETCH_SUCCESS', payload: processedData });
+      } else {
+        dispatch({ type: 'FETCH_SUCCESS', payload: [] });
+      }
+    } catch (err) {
+      console.log(err);
+      if (err instanceof Error) {
+        dispatch({ type: 'FETCH_FAIL', payload: err.message });
+      } else {
+        dispatch({ type: 'FETCH_FAIL', payload: 'um erro ocorreu' });
+      }
+    }
+  }, [reverse, params]);
 
   useEffect(() => {
     fetchData();

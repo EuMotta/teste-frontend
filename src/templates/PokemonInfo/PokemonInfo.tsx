@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { typeColors } from '@/components/Card/Card';
-import StatProgressBar from '@/components/ProgressBar';
+import { StatProgressBar } from '@/components/ProgressBar';
 type ParamsProps = {
   name: string;
 };

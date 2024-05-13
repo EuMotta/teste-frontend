@@ -2,6 +2,8 @@ import Image from 'next/image';
 import React from 'react';
 import { toast } from 'react-toastify';
 
+import { useData } from '@/Hooks';
+
 import { PokemonListProps } from '../../../@Types/global';
 import Button from '../Button';
 
@@ -33,6 +35,10 @@ export const typeColors: TypeColors = {
   bug: '#008000',
 };
 const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
+  const { fetchData: fetchCompare } = useData({
+    url: '/api/compare',
+    reverse: true,
+  });
   const handleSubmit = async () => {
     try {
       const response = await fetch('/api/pokebag', {
@@ -50,6 +56,31 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
       if (fetchData) {
         fetchData();
       }
+
+      toast.success(responseData);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('Erro desconhecido');
+      }
+    }
+  };
+  const handleSubmitCompare = async () => {
+    try {
+      const response = await fetch('/api/compare', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pokemon: pokemon, type: 'add' }),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+      const responseData = await response.text();
+      fetchCompare();
       toast.success(responseData);
     } catch (error) {
       if (error instanceof Error) {
@@ -102,7 +133,7 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
                 return (
                   <span
                     key={type}
-                    className="inline-block bg-gray-200 text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                    className="inline-block bg-gray-200 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
                     style={{
                       backgroundColor:
                         typeColors[
@@ -126,6 +157,9 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
           </div>
         </Button>
         <div className="flex justify-center items-center p-2">
+          <Button onClick={handleSubmitCompare} className="w-full">
+            Comparar
+          </Button>
           {type === 'add' && (
             <Button onClick={handleSubmit} className="w-full">
               +

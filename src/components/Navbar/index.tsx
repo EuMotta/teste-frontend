@@ -2,12 +2,17 @@ import Image from 'next/image';
 import React from 'react';
 
 import Button from '../Button';
+import Cart from '../Cart';
 
 const Navbar = () => {
   const navLinks = [
     {
       name: 'Home',
       href: '/',
+    },
+    {
+      name: 'Lista',
+      href: '/pokemons/1',
     },
     {
       name: 'Pokebag',
@@ -40,6 +45,7 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
+        <Cart />
       </div>
     </nav>
   );
