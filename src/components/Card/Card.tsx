@@ -156,7 +156,7 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
             })}
           </div>
         </Button>
-        <div className="flex justify-center items-center p-2">
+        <div className="flex gap-5 justify-center items-center p-2">
           <Button onClick={handleSubmitCompare} className="w-full">
             Comparar
           </Button>

@@ -5,7 +5,7 @@ import NoPokemons from '@/components/NoPokemons';
 import Section from '@/components/Section';
 import { useData } from '@/Hooks';
 import { DataProvider } from '@/providers/DataProvider';
-import Hero from '@/templates/Hero/Hero';
+import { Hero, HeroPage } from '@/templates/Hero/Hero';
 import PokeBagList from '@/templates/PokemonList/PokeBagList';
 
 import { sumBaseStats } from '@/utils/pokeBagCalc';
@@ -32,6 +32,7 @@ const Page = () => {
   return (
     <DataProvider data={data} loading={loading} fetchData={fetchData}>
       <Hero src="/pokebag.png" />
+      <HeroPage text="Sua pokébag" />
       <div className="flex p-5 items-center justify-evenly">
         <h3>Ataque total: {totalStats.attack}</h3>
         <h3>Defesa total: {totalStats.defense}</h3>

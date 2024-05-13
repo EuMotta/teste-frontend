@@ -7,7 +7,7 @@ import Container from '@/components/Container';
 import { StatProgressBarCompare } from '@/components/ProgressBar';
 import Section from '@/components/Section';
 import { useCompareData } from '@/Hooks';
-import Hero from '@/templates/Hero/Hero';
+import { Hero, HeroPage } from '@/templates/Hero/Hero';
 
 type StatProps = {
   stat: {
@@ -102,12 +102,10 @@ export default function Page({ params }: PageProps) {
   return (
     <>
       <Hero src="/VS.webp" />
+      <HeroPage text="Comparação de pokemons" />
       <Section>
-        <div className="p-5 border bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-red-500">
-          <h1 className="text-center text-2xl font-bold mb-4">Comparação</h1>
-        </div>
         <Container>
-          <div className="grid grid-cols-3 gap-5">
+          <div className="grid xl:grid-cols-3 lg:grid-cols-2 gap-5">
             {statsList.map((stat) => (
               <div
                 key={stat.stat}

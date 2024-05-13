@@ -5,7 +5,7 @@ import Paginator from '@/components/Paginator';
 import Section from '@/components/Section';
 import { useData } from '@/Hooks';
 import { DataProvider } from '@/providers/DataProvider';
-import Hero from '@/templates/Hero/Hero';
+import { Hero, HeroPage } from '@/templates/Hero/Hero';
 import PokemonList from '@/templates/PokemonList/PokemonList';
 type Params = {
   pages: number;
@@ -45,6 +45,7 @@ const App = ({ params }: { params: Params }) => {
   return (
     <DataProvider data={data} loading={loading} fetchData={fetchData}>
       <Hero src="/pokemon.svg" />
+      <HeroPage text="Lista de pokémons" />
       <Section>
         <div className="flex flex-col gap-5">
           <PokemonList />

@@ -51,6 +51,11 @@ export async function POST(request: any) {
         status: 200,
       });
     } else {
+      if (pokemons.length > 9) {
+        return new Response('Limite atingido.', {
+          status: 422,
+        });
+      }
       const pokemonNames = pokemons.map((p: any) => p.name);
       if (pokemonNames.includes(pokemon.name)) {
         return new Response('Este Pokémon já está na sua Pokédex.', {

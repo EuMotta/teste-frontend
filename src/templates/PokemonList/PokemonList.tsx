@@ -40,7 +40,7 @@ const PokemonList = () => {
   };
   return (
     <Container className={styles.list_container}>
-      <div className="flex items-center justify-center gap-10">
+      <div className="flex flex-wrap items-center justify-center gap-10">
         <div className={styles.list_button}>
           <Button onClick={fetchData}>Atualizar</Button>
         </div>
