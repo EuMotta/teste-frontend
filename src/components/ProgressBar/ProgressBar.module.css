@@ -1,0 +1,23 @@
+.progressbar_content {
+  @apply flex items-center gap-5 justify-between;
+}
+.progressbar_content p {
+  @apply text-sm mb-1;
+}
+.progressbar_bar {
+  @apply bg-blue-500 rounded-full h-full;
+}
+.progressbar_content .progressbar_progress {
+  @apply relative flex items-center bg-gray-200 rounded-full h-3 w-2/3;
+}
+.progressbar_content .progressbar_progress h5 {
+  @apply absolute text-xs w-full text-center;
+}
+
+.progressbar_progresscompare {
+  @apply relative flex items-center bg-gray-200 rounded-full h-3;
+}
+
+.progressbar_progresscompare p {
+  @apply absolute text-xs w-full text-center;
+}

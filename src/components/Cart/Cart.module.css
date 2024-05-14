@@ -1,0 +1,10 @@
+.cart_content {
+  @apply flex items-center justify-between bg-white border border-gray-300 absolute top-full left-0 w-full;
+}
+.cart_content .cart_pokemons {
+  @apply flex flex-wrap justify-start  w-full p-4;
+}
+
+.cart_content .cart_pokemons .cart_pokemon_button {
+  @apply relative top-0;
+}

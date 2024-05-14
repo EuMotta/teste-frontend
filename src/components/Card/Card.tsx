@@ -1,11 +1,13 @@
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useData } from '@/Hooks';
 
 import { PokemonListProps } from '../../../@Types/global';
 import Button from '../Button';
+import styles from './Card.module.css';
 
 type Props = {
   pokemon: PokemonListProps;
@@ -34,19 +36,23 @@ export const typeColors: TypeColors = {
   poison: '#D196FC',
   bug: '#008000',
 };
+
 const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
   const { fetchData: fetchCompare } = useData({
     url: '/api/compare',
     reverse: true,
   });
-  const handleSubmit = async () => {
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSubmit = async (ballType: string) => {
     try {
       const response = await fetch('/api/pokebag', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ pokemon: pokemon, type: type }),
+        body: JSON.stringify({ pokemon: pokemon, type: type, ballType }),
       });
 
       if (!response.ok) {
@@ -66,6 +72,7 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
       }
     }
   };
+
   const handleSubmitCompare = async () => {
     try {
       const response = await fetch('/api/compare', {
@@ -90,18 +97,21 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
       }
     }
   };
+
+  const pokeballs = ['pokeball', 'greatball', 'ultraball', 'masterball'];
+
   return (
     <div
       key={pokemon.name}
-      className="w-56 border-2 hover:scale-105 group  bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto"
+      className={`${styles.card_content} group`}
       style={{
         borderColor: typeColors[pokemon.types[0] as keyof typeof typeColors],
       }}
     >
-      <div className="rounded shadow-lg h-full flex flex-col justify-between">
+      <div className={styles.card_image}>
         <Button unstyled href={`/pokemon/${pokemon.name}`}>
           <div
-            className=" shadow-md"
+            className="shadow-md"
             style={{
               backgroundColor:
                 typeColors[pokemon.types[0] as keyof typeof typeColors],
@@ -115,7 +125,7 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
             }}
           >
             <Image
-              className="w-full group-hover:scale-125 group-hover:translate-x-5 group-hover:-translate-y-5 transition-all"
+              className="group-hover:scale-125  group-hover:translate-x-5 group-hover:-translate-y-5"
               src={pokemon.imageUrl}
               width={530}
               height={530}
@@ -125,53 +135,83 @@ const PokemonCard = ({ pokemon, type, fetchData }: Props) => {
               }}
             />
           </div>
-
-          <div className="px-6 py-4 ">
-            <h3 className="font-bold text-center mb-2">{pokemon.name}</h3>
-            <p className="text-center">
-              {pokemon?.types?.map((type, index) => {
-                return (
-                  <span
-                    key={type}
-                    className="inline-block bg-gray-200 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
-                    style={{
-                      backgroundColor:
-                        typeColors[
-                          pokemon.types[index] as keyof typeof typeColors
-                        ],
-                    }}
-                  >
-                    {type}
-                  </span>
-                );
-              })}
-            </p>
-
-            {pokemon?.stats?.map((stat) => {
+        </Button>
+        <div className={styles.card_text}>
+          <h3>{pokemon.name}</h3>
+          <p>
+            {pokemon?.types?.map((type, index) => {
               return (
-                <p key={stat.name}>
-                  {stat.name}: {stat.base_stat}
-                </p>
+                <span
+                  key={type}
+                  style={{
+                    backgroundColor:
+                      typeColors[
+                        pokemon.types[index] as keyof typeof typeColors
+                      ],
+                  }}
+                >
+                  {type}
+                </span>
               );
             })}
-          </div>
-        </Button>
-        <div className="flex gap-5 justify-center items-center p-2">
+          </p>
+          {pokemon?.stats?.map((stat) => {
+            return (
+              <p key={stat.name}>
+                {stat.name}: {stat.base_stat}
+              </p>
+            );
+          })}
+        </div>
+        <div className={styles.card_buttons}>
           <Button onClick={handleSubmitCompare} className="w-full">
             Comparar
           </Button>
           {type === 'add' && (
-            <Button onClick={handleSubmit} className="w-full">
-              +
-            </Button>
+            <div className="w-full">
+              <Button
+                onClick={() => setShowModal(!showModal)}
+                className="w-full"
+              >
+                +
+              </Button>
+            </div>
           )}
           {type === 'del' && (
-            <Button onClick={handleSubmit} className="w-full">
+            <Button onClick={() => handleSubmit('none')} className="w-full">
               -
             </Button>
           )}
         </div>
       </div>
+      {showModal && (
+        <div className={styles.card_modal}>
+          <div className={styles.card_modal_content}>
+            <h2>Escolha uma Pokébola </h2>
+            <div className={styles.card_modal_pokeballs}>
+              {pokeballs.map((ball) => (
+                <div
+                  key={ball}
+                  onClick={() => {
+                    handleSubmit(ball);
+                    setShowModal(false);
+                  }}
+                  className={styles.card_modal_pokeball}
+                >
+                  <Image
+                    src={`/pokeballs/${ball}.png`}
+                    width={38}
+                    height={38}
+                    alt={ball}
+                  />
+                  <span>{ball}</span>
+                </div>
+              ))}
+            </div>
+            <Button onClick={() => setShowModal(false)}>Cancelar</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

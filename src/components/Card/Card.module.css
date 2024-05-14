@@ -1,0 +1,46 @@
+.card_content {
+  @apply w-56 border-2 hover:scale-105 hover:z-50 bg-slate-100 hover:shadow-xl hover:shadow-slate-400 transition-all mx-auto;
+}
+.card_content .card_image {
+  @apply rounded shadow-lg h-full flex flex-col justify-between;
+}
+.card_content .card_image img {
+  @apply w-full  transition-all;
+}
+.card_content .card_text {
+  @apply px-6 py-4;
+}
+.card_content .card_text h3 {
+  @apply font-bold text-center mb-2;
+}
+.card_content .card_text p {
+  @apply text-center;
+}
+.card_content .card_text span {
+  @apply inline-block bg-gray-200 text-white rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2;
+}
+.card_content .card_buttons {
+  @apply flex gap-5 justify-center items-center p-2;
+}
+.card_content .card_modal {
+  @apply fixed flex  -left-20 z-50;
+}
+.card_content .card_modal .card_modal_content {
+  @apply bg-white p-4 rounded shadow-lg;
+}
+.card_content .card_modal .card_modal_content h2 {
+  @apply text-center mb-4;
+}
+.card_content .card_modal .card_modal_content .card_modal_pokeballs {
+  @apply flex justify-around;
+}
+.card_content
+  .card_modal
+  .card_modal_content
+  .card_modal_pokeballs
+  .card_modal_pokeball {
+  @apply cursor-pointer hover:bg-gray-200 p-2 flex flex-col items-center;
+}
+.card_content .card_modal .card_modal_content button {
+  @apply mt-4 w-full bg-red-500 text-white;
+}

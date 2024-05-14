@@ -1,0 +1,3 @@
+.no_pokemons_content {
+  @apply flex flex-col justify-center items-center h-[80vh];
+}

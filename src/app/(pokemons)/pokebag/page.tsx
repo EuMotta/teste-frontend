@@ -33,7 +33,7 @@ const Page = () => {
     <DataProvider data={data} loading={loading} fetchData={fetchData}>
       <Hero src="/pokebag.png" />
       <HeroPage text="Sua pokébag" />
-      <div className="flex p-5 items-center justify-evenly">
+      <div className="flex flex-wrap p-5 items-center justify-evenly">
         <h3>Ataque total: {totalStats.attack}</h3>
         <h3>Defesa total: {totalStats.defense}</h3>
       </div>

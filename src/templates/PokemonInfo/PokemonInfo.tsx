@@ -26,9 +26,9 @@ type Stat = {
 };
 const PokemonInfo = ({ data, params }: Props) => {
   return (
-    <div className="grid grid-cols-2  mx-auto">
+    <div className="grid lg:grid-cols-2  mx-auto">
       <div
-        className="flex justify-center w-3/4 mx-auto rounded-xl overflow-hidden  items-center"
+        className="flex justify-center lg:w-3/4 w-full mx-auto rounded-xl overflow-hidden  items-center"
         style={{
           backgroundPosition: 'center',
           backgroundSize: 'cover',
@@ -50,7 +50,7 @@ const PokemonInfo = ({ data, params }: Props) => {
           }}
         />
       </div>
-      <div className="p-5 w-3/4 mx-auto">
+      <div className="p-5 lg:w-3/4 mx-auto">
         <div className="bg-white p-8 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold text-gray-800">{params.name}</h1>
           <div className="flex flex-col gap-5 justify-center mt-4">

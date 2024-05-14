@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 }
 export async function POST(request: any) {
   const data = await request.json();
-  const { pokemon, type } = data;
+  const { pokemon, type, ballType } = data;
   try {
     let pokemons = [];
 
@@ -62,14 +62,39 @@ export async function POST(request: any) {
           status: 422,
         });
       }
-      pokemons.push(pokemon);
-      cookies().set({
-        name: 'Pokemons',
-        value: JSON.stringify(pokemons),
-      });
-      return new Response('Pokémon adicionado com sucesso à Pokédex!', {
-        status: 200,
-      });
+      let captureChance;
+      switch (ballType) {
+        case 'pokeball':
+          captureChance = 0.2;
+          break;
+        case 'greatball':
+          captureChance = 0.4;
+          break;
+        case 'ultraball':
+          captureChance = 0.6;
+          break;
+        case 'masterball':
+          captureChance = 1;
+          break;
+        default:
+          captureChance = 0;
+          break;
+      }
+      const captured = Math.random() < captureChance;
+      if (captured) {
+        pokemons.push(pokemon);
+        cookies().set({
+          name: 'Pokemons',
+          value: JSON.stringify(pokemons),
+        });
+        return new Response('Pokémon adicionado com sucesso à Pokédex!', {
+          status: 200,
+        });
+      } else {
+        return new Response('O pokemon escapou.', {
+          status: 422,
+        });
+      }
     }
   } catch {
     return new Response('Erro ao adicionar/remover o Pokémon à Pokédex.', {

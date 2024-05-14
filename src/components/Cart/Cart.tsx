@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useData } from '@/Hooks';
 
 import Button from '../Button';
+import styles from './Cart.module.css';
 
 const Cart = () => {
   const { fetchData, loading, data } = useData({
@@ -83,8 +84,8 @@ const Cart = () => {
       </Button>
 
       {dropdownOpen && (
-        <div className="flex items-center justify-between bg-white border border-gray-300 absolute top-full left-0 w-full">
-          <div className="pokemon-list flex flex-wrap justify-start  w-full p-4">
+        <div className={styles.cart_content}>
+          <div className={styles.cart_pokemons}>
             {data.map((pokemon: any) => (
               <>
                 <Image
@@ -94,9 +95,8 @@ const Cart = () => {
                   width={60}
                   height={60}
                   title={pokemon.name}
-                  className="rounded-full"
                 />
-                <div className="relative top-0 ">
+                <div className={styles.cart_pokemon_button}>
                   <Button unstyled onClick={() => handleRemove(pokemon)}>
                     X
                   </Button>

@@ -2,8 +2,8 @@ import Image from 'next/image';
 import React from 'react';
 
 import Button from '../Button';
-import Cart from '../Cart';
-
+import Cart from '../Cart/Cart';
+import styles from './Navbar.module.css';
 const Navbar = () => {
   const navLinks = [
     {
@@ -20,13 +20,9 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="bg-white/80 shadow-sm">
-      <div className=" flex flex-wrap items-center justify-center sm:justify-between mx-auto p-4">
-        <Button
-          href="/"
-          unstyled
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
+    <nav className={styles.nav}>
+      <div className={styles.nav_content}>
+        <Button href="/" unstyled className={styles.nav_img_button}>
           <Image
             src="/pokemon.svg"
             className="h-7"
@@ -36,8 +32,8 @@ const Navbar = () => {
           />
         </Button>
 
-        <div className="items-center flex">
-          <ul className="flex gap-5 font-medium p-4 mt-4  rounded-lg   ">
+        <div className={styles.nav_links}>
+          <ul>
             {navLinks.map((link) => (
               <li key={link.name}>
                 <Button href={link.href}>{link.name}</Button>
